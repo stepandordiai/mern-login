@@ -8,11 +8,19 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+connectDB();
+
 app.use(express.json());
 
-app.use("/api/users", authRoutes);
+// CORS for frontend domain
+app.use(
+	cors({
+		origin: "https://mern-login-frontend-h7tp.onrender.com",
+		credentials: true,
+	})
+);
 
-connectDB();
+app.use("/api/users", authRoutes);
 
 app.listen(PORT, () => {
 	console.log(`Server started at port ${PORT}`);
